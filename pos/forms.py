@@ -1,5 +1,6 @@
 from django import forms
 from .models import *
+from django.forms import modelformset_factory
 
 class PresentationForm(forms.ModelForm):
     class Meta:
@@ -22,12 +23,24 @@ class SettingsForm(forms.ModelForm):
         model = Settings
         fields = ['systemname', 'image', 'address', 'phone', 'exchange']
 
-# class ProductForm(forms.ModelForm):
-#     class Meta:
-#         model = Product
-#         fields = ['size', 'productname', 'presentation', 'description', 'status']
+class ProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ['size', 'productname', 'presentation', 'description', 'status']
 
 # class SaleForm(forms.ModelForm):
 #     class Meta:
 #         model = Sale
 #         fields = ['customer_name', 'sub_total', 'total', 'discount', 'user', 'money_r', 'money_change', 'code', 'status']
+
+class SaleForm(forms.ModelForm):
+    class Meta:
+        model = Sale
+        fields = '__all__'  
+
+class SaleDetailForm(forms.ModelForm):
+    class Meta:
+        model = Sale_detail
+        fields = '__all__' 
+
+SaleDetailFormSet = modelformset_factory(Sale_detail, form=SaleDetailForm, extra=1)
